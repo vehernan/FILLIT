@@ -1,7 +1,7 @@
 
 NAME = fillit
 CC = clang
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g
 INCLUDES = libft/includes
 SRCS = create_map.c fillit_read.c fillit_solve.c fillit_tetromino.c main.c
 OBJS = *.o

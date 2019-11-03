@@ -21,14 +21,16 @@ static void  fill_map(char ***map, char val, int size)
 {
   int row;
   int col;
-
+  
   row = 0;
   while (row < size)
   {
     col = 0;
     while (col < size)
-      *map[row][col++] = val;
-    *map[row][col] = '\0';
+    {
+      (*map)[row][col++] = val;
+      (*map)[row][col] = '\0';
+    }
     row += 1;
   }
 }
