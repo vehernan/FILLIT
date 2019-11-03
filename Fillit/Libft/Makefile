@@ -12,7 +12,7 @@
 
 NAME = libft.a
 HEAD = includes/libft.h
-SRCS = ft*.c
+SRCS = ft*.c get_next_line/get_next_line.c
 OBJS = *.o
 
 $(NAME):
@@ -20,8 +20,6 @@ $(NAME):
 	@ar rc $(NAME) $(OBJS)
 	@ranlib $(NAME)
 	@echo "[INFO] Library [$(NAME)] created (objects remaining in directory)"
-
-.PHONY: all, clean, fclean, re
 
 all: $(NAME)
 
@@ -34,3 +32,5 @@ fclean: clean
 	@echo "[INFO] Library [$(NAME)] removed"
 
 re: fclean all
+
+.PHONY: all, clean, fclean, re

@@ -1,13 +1,58 @@
 #include "fillit.h"
 
 /*
+** Possible tetriminos values just using binary as the representation.
+** Might be also useful in the future for other modes such as special chars,
+** or emojis or whatever...
+*/
+
+char *g_tetriminos_values[] =
+{
+  "###\n..#",
+  ".#\n.#\n##",
+  "#..\n###",
+  "##\n#.\n#.",
+  "###\n.#.",
+   ".#\n##\n.#",
+  ".#.\n###",
+  "#.\n##\n#.",
+  "###\n#..",
+   "##\n.#\n.#",
+   "..#\n###",
+   "#.\n#.\n##",
+   ".##\n##.",
+   "#.\n##\n.#",
+   "##.\n.##",
+   ".#\n##\n#.",
+   "####",
+   "#\n#\n#\n#",
+   "##\n##"
+};
+
+/*
+** Sees if a tetromino piece is valid by making sure its absolute value is
+** valid from a table defined above.
+*/
+
+static int bitwise_check(char *piece)
+{
+  int   i;
+
+  i = -1;
+  while (++i < 20)
+    if (!ft_strcmp(piece, g_tetriminos_values[i]))
+      return (1);
+  return (0);
+}
+
+/*
 ** Validates the number and values of the characters found in the map (file).
 ** If something fails, such as having a larger or smaller tetromino width than
 ** whatever is defined, or having invalid tetromino sizes, it returns zero.
 ** Counter inside (tetromino[i++] == '\n') because of fucking norm. :)
 */
 
-static int	fillit_valid_characters(char *tetromino)
+static int	valid_characters(char *tetromino)
 {
 	int		i;
 	int		height;
@@ -37,52 +82,67 @@ static int	fillit_valid_characters(char *tetromino)
 }
 
 /*
-** Splits the tetromino by lines, and check the neighbour for each block
-** characters. Almost of the pieces will add a total of 6 to the counter, but
-** the block one, which adds a total of 8. If the tetromino isn't equal to
-** those, it's not a valid one. The -1 in both row and col, is because of the
-** fucking norm. :) I mean, what's the difference between 24 and 26 lines?!
-*/
-
-static int	fillit_valid_tetromino(char **tetromino)
-{
-	int		cnt;
-	int		row;
-	int		col;
-
-	cnt = 0;
-	row = -1;
-	while (SIZE > ++row)
-	{
-		col = -1;
-		while (SIZE > ++col)
-		{
-			if (tetromino[row][col] == BLOCK && row < 3)
-				tetromino[row + 1][col] == BLOCK ? cnt++ : cnt;
-			if (tetromino[row][col] == BLOCK && row > 0)
-				tetromino[row - 1][col] == BLOCK ? cnt++ : cnt;
-			if (tetromino[row][col] == BLOCK && col < 3)
-				tetromino[row][col + 1] == BLOCK ? cnt++ : cnt;
-			if (tetromino[row][col] == BLOCK && col > 0)
-				tetromino[row][col - 1] == BLOCK ? cnt++ : cnt;
-		}
-	}
-	if (cnt == 6 || cnt == 8)
-		return (1);
-	return (0);
-}
-
-/*
 ** Calls both functions to make sure that there are valid characters and
 ** valid tetromino in the map.
 */
 
-static int	fillit_valid(char *map)
+static int	is_valid(char *piece)
 {
-	if (fillit_valid_characters(map))
-		if (fillit_valid_tetromino((ft_strsplit(map, '\n'))))
-			return (1);
-	return (0);
+  return (valid_characters(piece) && bitwise_check(piece));
+}
+
+/*
+** Returns a tetromino piece, but we don't know if it is a valid one so
+** please shut the fuck up about this weird design pattern, but this is
+** 42 anyways and people do like weird shit in this school because they copy
+** each other for some reason? sorry for the rant, but I like this school
+** because it also allows me to do creative shit like this without reprecusion
+** because your boss in real life expects you to do clean, short, design
+** oriented shit code, but it feels good when you can do that because your
+** level of abstraction increase and you level up dude...
+** Yep, I'm high as shit. :)
+**
+** ~~ hits blunt ~~
+**
+** But for real. It is better to follow guide-lines, be around smart people,
+** and complete tickets... you feel that you are on a track, and you just have
+** to complete this tasks. It is not like you are in limbo and have to guess
+** how to design a project from scratch?
+**
+**                   dM
+**                   MMr
+**                  4MMML                  .
+**                  MMMMM.                xf
+**  .              "M6MMM               .MM-
+**   Mh..          +MM5MMM            .MMMM
+**   .MMM.         .MMMMML.          MMMMMh
+**    )MMMh.        MM5MMM         MMMMMMM
+**     3MMMMx.     'MMM3MMf      xnMMMMMM"
+**     '*MMMMM      MMMMMM.     nMMMMMMP"
+**       *MMMMMx    "MMM5M\    .MMMMMMM=
+**        *MMMMMh   "MMMMM"   JMMMMMMP
+**          MMMMMM   GMMMM.  dMMMMMM            .
+**           MMMMMM  "MMMM  .MMMMM(        .nnMP"
+**..          *MMMMx  MMM"  dMMMM"    .nnMMMMM*
+** "MMn...     'MMMMr 'MM   MMM"   .nMMMMMMM*"
+**  "4MMMMnn..   *MMM  MM  MMP"  .dMMMMMMM""
+**    ^MMMMMMMMx.  *ML "M .M*  .MMMMMM**"
+**       *PMMMMMMhn. *x > M  .MMMM**""
+**          ""**MMMMhx/.h/ .=*"
+**                   .3P"%....
+**        [nosig]  nP"     "*MMnx
+*/
+
+static char    *get_piece(int fd)
+{
+  int   i;
+  char  *piece;
+
+  i = 0;
+  piece = ft_strnew(TETROMINO_SIZE);
+  while (get_next_line(fd, &piece) > 0 && i < 4)
+    i += 1;
+  return (piece);
 }
 
 /*
@@ -96,22 +156,24 @@ static int	fillit_valid(char *map)
 char		**fillit_read(int fd)
 {
 	int		i;
-	char	**map;
+  char  *end_line;
+	char	**pieces;
 
 	i = 0;
-	if (!(map = (char **)malloc(sizeof(char *) * BUFFER_SIZE)))
+	if (!(pieces = (char **)malloc(sizeof(char *) * BUFFER_SIZE)))
 		return (NULL);
 	while (i < TETROMINO_MAX_TOTAL)
 	{
-		if (!(map[i] = (char *)malloc(sizeof(char) * TETROMINO_SIZE)))
-			return (NULL);
-		ft_bzero(map[i], TETROMINO_SIZE);
-		if (!(read(fd, map[i], TETROMINO_SIZE)))
-			return (map);
-		if (!(fillit_valid(map[i])))
-			return (NULL);
-		i += 1;
-		g_tetriminos_count = i;
+    pieces[i] = get_piece(fd);
+    if (!(is_valid(pieces[i])))
+      return (NULL);
+    if (get_next_line(fd, &end_line) == 0) {
+      return (pieces);
+    }
+    if (end_line[0] != '\n')
+      return (NULL);
+    i += 1;
+    g_tetriminos_count = i;
 	}
 	return (NULL);
 }

@@ -46,6 +46,12 @@
 # define BUFFER_SIZE  (TETROMINO_SIZE * TETROMINO_MAX_TOTAL)
 
 /*
+** Tetrominio encoded values thingy
+*/
+
+char  *g_tetriminos_value[20];
+
+/*
 ** Global variable for number of tetriminos
 */
 
