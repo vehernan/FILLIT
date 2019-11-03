@@ -87,4 +87,3 @@ int				get_next_line(int fd, char **line)
 	}
 	return (last_check(&original, line));
 }
-

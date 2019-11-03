@@ -4,7 +4,7 @@ CC = clang
 # FLAGS = -Wall -Wextra -Werror
 FLAGS = 
 INCLUDES = libft/includes
-SRCS = fill2.c
+SRCS = fill2.c get_next_line.c 
 OBJS = *.o
 LIB_DIR = libft/
 
