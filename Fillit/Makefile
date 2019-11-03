@@ -1,12 +1,11 @@
 
 NAME = fillit
 CC = clang
-# FLAGS = -Wall -Wextra -Werror
-FLAGS = 
+FLAGS = -Wall -Wextra -Werror
 INCLUDES = libft/includes
-SRCS = fill2.c get_next_line.c 
+SRCS = create_map.c fillit_read.c fillit_solve.c fillit_tetromino.c main.c
 OBJS = *.o
-LIB_DIR = libft/
+LIB_DIR = Libft/
 
 $(NAME):
 	@make -C $(LIB_DIR) fclean && make -C $(LIB_DIR)
