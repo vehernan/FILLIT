@@ -9,11 +9,11 @@
 char *g_tetriminos_values[] =
 {
   "###\n..#",
-  ".#\n.#\n##",
+  ".#\n.#\n##", //there should be two more dots before the 2nd '\n'
   "#..\n###",
-  "##\n#.\n#.",
+  "##\n#.\n#.", // again missing dots
   "###\n.#.",
-   ".#\n##\n.#",
+  ".#\n##\n.#",
   ".#.\n###",
   "#.\n##\n#.",
   "###\n#..",

@@ -97,4 +97,5 @@ size_t				ft_count(char const *str, char c);
 size_t				ft_len(char const *str, char c);
 char				*ft_strnewcpy(char *str);
 double				ft_sqrt(double x);
+char				*ft_strnjoin(char const *s1, char const *s2, int i);
 #endif
