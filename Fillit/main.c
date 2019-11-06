@@ -55,8 +55,8 @@ int				main(int argc, char *argv[])
 	{
 		if ((fd = open(argv[1], O_RDONLY)) == -1)
 			ft_putstr("error\n");
-		else if ((map = fillit_read(fd)) && (ft_strlen(map[0])) && \
-				(!map[g_tetriminos_count - 1][TETROMINO_SIZE - 1]))
+		else if ((map = fillit_read(fd)) && (ft_strlen(map[0])))
+				// (!map[g_tetriminos_count - 1][TETROMINO_SIZE - 1]))
 		{
 			tetrominos = fillit_tetromino(map);
 			map = fillit_solve(tetrominos);
