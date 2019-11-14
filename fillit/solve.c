@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fillit_solve.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vehernan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/06 00:37:41 by vehernan          #+#    #+#             */
+/*   Updated: 2019/11/06 00:37:45 by vehernan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fillit.h"
 
@@ -52,7 +63,7 @@ static int	fillit_check_placement(t_tetromino *tet, char **map, int y, int x)
 		{
 			if (tet->x[i] == col && tet->y[i] == row && i < SIZE)
 			{
-				if (map[col + y][row + x] != EMPTY)
+				if (map[col + y][row + x] != '.')
 					return (0);
 				i += 1;
 			}
@@ -127,7 +138,7 @@ static int	fillit_solve_map(char **map, t_tetromino *tet, int size)
 			{
 				if (fillit_solve_map(map, tet->next, size))
 					return (1);
-				tet->letter = EMPTY;
+				tet->letter = '.';
 				fillit_set_tetromino(tet, map, y, x);
 				tet->letter = letter;
 			}
@@ -145,7 +156,7 @@ static int	fillit_solve_map(char **map, t_tetromino *tet, int size)
 ** until a solution is found. :D
 */
 
-char		**fillit_solve(t_tetromino *tet)
+char		**solve(t_tetromino *tet)
 {
 	char	**map;
 	int		size;
@@ -153,13 +164,13 @@ char		**fillit_solve(t_tetromino *tet)
 	if (!tet)
 		return (NULL);
 	size = ft_sqrt(g_tetriminos_count * SIZE);
-	map = fillit_create_map(size);
+	map = create_map(size);
 	fillit_move_tetromino_upperleft(tet);
 	while (!fillit_solve_map(map, tet, size))
 	{
 		ft_memdel((void **)map);
 		size += 1;
-		map = fillit_create_map(size);
+		map = create_map(size);
 	}
 	return (map);
 }

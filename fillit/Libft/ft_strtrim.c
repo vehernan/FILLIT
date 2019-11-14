@@ -6,7 +6,7 @@
 /*   By: vehernan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 06:40:03 by vehernan          #+#    #+#             */
-/*   Updated: 2019/07/13 10:59:08 by vehernan         ###   ########.fr       */
+/*   Updated: 2019/11/06 00:35:52 by vehernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,26 +33,3 @@ char		*ft_strtrim(char const *s)
 		return (freshcop);
 	return (NULL);
 }
-
-
-
-/*
-char	*ft_strtrim(char const *s)
-{
-char *temp;
-int		i;
-
-if (s == 0)
-	return (0);
-temp = s;
-while (ft_isspace(temp) && temp != '\0')
-	temp++;
-i = ft_strlen(temp) - 1;
-while (ft_isspace(temp[i] && temp[i] != '\0')
-	i--;
-temp[i + 1] = '\0';
-
-	trurn (ft_strnew(temp));
-}
-
-*/

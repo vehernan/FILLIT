@@ -3,7 +3,7 @@ NAME = fillit
 CC = clang
 FLAGS = -Wall -Wextra -Werror -g
 INCLUDES = libft/includes
-SRCS = create_map.c fillit_read.c fillit_solve.c fillit_tetromino.c main.c
+SRCS = create_map.c f_read.c solve.c tetromino.c main.c
 OBJS = *.o
 LIB_DIR = Libft/
 

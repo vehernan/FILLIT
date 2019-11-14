@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vehernan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/06 00:37:21 by vehernan          #+#    #+#             */
+/*   Updated: 2019/11/06 00:37:26 by vehernan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fillit.h"
 
@@ -55,11 +66,10 @@ int				main(int argc, char *argv[])
 	{
 		if ((fd = open(argv[1], O_RDONLY)) == -1)
 			ft_putstr("error\n");
-		else if ((map = fillit_read(fd)) && (ft_strlen(map[0])))
-				// (!map[g_tetriminos_count - 1][TETROMINO_SIZE - 1]))
+		else if ((map = f_read(fd)) && (ft_strlen(map[0])))
 		{
 			tetrominos = fillit_tetromino(map);
-			map = fillit_solve(tetrominos);
+			map = solve(tetrominos);
 			fillit_print_map(map);
 			free(tetrominos);
 			ft_memdel((void **)map);

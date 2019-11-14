@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fillit_tetromino.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vehernan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/06 00:38:07 by vehernan          #+#    #+#             */
+/*   Updated: 2019/11/06 02:13:02 by vehernan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fillit.h"
 
@@ -10,12 +21,12 @@
 ** The -1 in both row and col is because... you guessed it, the fucking norm.
 */
 
-static void				set_dimensions(t_tetromino *tet)
+static void			set_dimensions(t_tetromino *tet)
 {
-	int		row;
-	int		col;
-	int		width;
-	int		height;
+	int				row;
+	int				col;
+	int				width;
+	int				height;
 
 	row = -1;
 	width = 0;
@@ -25,8 +36,8 @@ static void				set_dimensions(t_tetromino *tet)
 		col = -1;
 		while (++col < 4)
 		{
-      width += (tet->x[row] == tet->x[col]) ? 1 : 0;
-      height += (tet->y[row] == tet->y[col]) ? 1 : 0;
+			width += (tet->x[row] == tet->x[col]) ? 1 : 0;
+			height += (tet->y[row] == tet->y[col]) ? 1 : 0;
 		}
 	}
 	if ((width % 4) || (height % 4))
@@ -43,10 +54,10 @@ static void				set_dimensions(t_tetromino *tet)
 ** work with the number of the tetrominos (working as an ID for each one).
 */
 
-static char				***split_tetromino(char **map)
+static char			***split_tetromino(char **map)
 {
-	int		i;
-	char	***fullmap;
+	int				i;
+	char			***fullmap;
 
 	i = 0;
 	if (!(fullmap = (char ***)malloc(sizeof(char **) * g_tetriminos_count + 1)))
@@ -64,11 +75,11 @@ static char				***split_tetromino(char **map)
 ** t_tetromino type, to allocate them correctly.
 */
 
-static t_tetromino		*new_tetrominos(int size)
+static t_tetromino	*new_tetrominos(int size)
 {
-	int			i;
-	t_tetromino	*new;
-	t_tetromino *head;
+	int				i;
+	t_tetromino		*new;
+	t_tetromino		*head;
 
 	if (!(new = (t_tetromino *)malloc(sizeof(t_tetromino) + 1)))
 		return (NULL);
@@ -85,7 +96,7 @@ static t_tetromino		*new_tetrominos(int size)
 }
 
 /*
-** Creates new tetrominos by assigning the x and y coordinates of every block
+** Creates new tetrominos by assigning the x and y coordinates of every '#'
 ** into its structure, and also assigning the letter (A, B, C...) into its
 ** structure. We used an array of counters because of the fucking norm.
 ** The counters represent:
@@ -99,15 +110,10 @@ static t_tetromino		*new_tetrominos(int size)
 ** Example: tetromino1 -> A; tetromino2 -> B; tetromino3 -> C; ...
 */
 
-# define NUM_TET (0)
-# define ROW (1)
-# define COL (2)
-# define COORD (3)
-
-static t_tetromino		*create_tetrominos(char ***fullmap, \
-						t_tetromino *tet, char letter, int *data)
+static t_tetromino	*create_tetrominos(char ***fullmap, \
+					t_tetromino *tet, char letter, int *data)
 {
-	t_tetromino *head;
+	t_tetromino		*head;
 
 	head = tet;
 	data[NUM_TET] = -1;
@@ -120,7 +126,7 @@ static t_tetromino		*create_tetrominos(char ***fullmap, \
 			data[COL] = -1;
 			while (++data[COL] < 4)
 			{
-				if (fullmap[data[NUM_TET]][data[ROW]][data[COL]] == BLOCK)
+				if (fullmap[data[NUM_TET]][data[ROW]][data[COL]] == '#')
 				{
 					tet->x[data[COORD]] = data[ROW];
 					tet->y[data[COORD]++] = data[COL];
@@ -139,12 +145,12 @@ static t_tetromino		*create_tetrominos(char ***fullmap, \
 ** tetrominos from the map. In this function, the array of counter is defined.
 */
 
-t_tetromino				*fillit_tetromino(char **map)
+t_tetromino			*fillit_tetromino(char **map)
 {
 	int				*counter;
 	char			***fullmap;
 	t_tetromino		*tetrominos;
-  t_tetromino   *list;
+	t_tetromino		*list;
 
 	if (!(counter = (int *)malloc(sizeof(int) * 4)))
 		return (NULL);
@@ -152,6 +158,6 @@ t_tetromino				*fillit_tetromino(char **map)
 		return (NULL);
 	tetrominos = new_tetrominos(g_tetriminos_count);
 	fullmap = split_tetromino(map);
-  list = create_tetrominos(fullmap, tetrominos, LETTER, counter);
+	list = create_tetrominos(fullmap, tetrominos, LETTER, counter);
 	return (list);
 }
