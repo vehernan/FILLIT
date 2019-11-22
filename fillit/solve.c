@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit_solve.c                                     :+:      :+:    :+:   */
+/*   solve.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vehernan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/06 00:37:41 by vehernan          #+#    #+#             */
-/*   Updated: 2019/11/06 00:37:45 by vehernan         ###   ########.fr       */
+/*   Created: 2019/11/03 19:45:24 by vehernan          #+#    #+#             */
+/*   Updated: 2019/11/03 19:45:27 by vehernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,9 @@ char		**solve(t_tetromino *tet)
 {
 	char	**map;
 	int		size;
+	int		i;
 
+	i = 0;
 	if (!tet)
 		return (NULL);
 	size = ft_sqrt(g_tetriminos_count * SIZE);
@@ -168,7 +170,9 @@ char		**solve(t_tetromino *tet)
 	fillit_move_tetromino_upperleft(tet);
 	while (!fillit_solve_map(map, tet, size))
 	{
-		ft_memdel((void **)map);
+		while (i >= 0)
+			free(map[i--]);
+		free(map);
 		size += 1;
 		map = create_map(size);
 	}

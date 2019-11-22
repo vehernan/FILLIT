@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vehernan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/06 00:37:21 by vehernan          #+#    #+#             */
-/*   Updated: 2019/11/06 00:37:26 by vehernan         ###   ########.fr       */
+/*   Created: 2019/11/16 19:48:48 by vehernan          #+#    #+#             */
+/*   Updated: 2019/11/21 17:12:32 by vehernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,20 +59,33 @@ static void		fillit_print_map(char **map)
 int				main(int argc, char *argv[])
 {
 	int			fd;
+	int			i;
 	char		**map;
 	t_tetromino *tetrominos;
+	t_tetromino *tmp;
 
+	i = 0;
 	if (argc == 2)
 	{
-		if ((fd = open(argv[1], O_RDONLY)) == -1)
+		if ((fd = open(argv[1], O_RDONLY)) == -1) {
 			ft_putstr("error\n");
+		}
 		else if ((map = f_read(fd)) && (ft_strlen(map[0])))
 		{
 			tetrominos = fillit_tetromino(map);
+			ft_memdel((void **)map);
 			map = solve(tetrominos);
 			fillit_print_map(map);
-			free(tetrominos);
-			ft_memdel((void **)map);
+				//while(1);
+			while ((tmp = tetrominos->next)) // use lstdel fucnction and just copy the while loop remove middle code and add free();
+			{
+				free(tetrominos);
+				tetrominos = tmp;
+			}
+			i = 0;
+			while (i >= 0)
+				free(map[i--]);
+			free(map);
 		}
 		else
 			ft_putstr("error\n");

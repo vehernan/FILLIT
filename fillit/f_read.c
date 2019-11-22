@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fillit_read.c                                      :+:      :+:    :+:   */
+/*   read.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vehernan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/06 00:24:48 by vehernan          #+#    #+#             */
-/*   Updated: 2019/11/06 01:57:54 by vehernan         ###   ########.fr       */
+/*   Created: 2019/11/03 19:44:52 by vehernan          #+#    #+#             */
+/*   Updated: 2019/11/06 03:32:34 by vehernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ static int	shape_verify(char *piece)
 	total = 113;
 	while (++i < total)
 		if (!ft_strncmp(piece, g_tetriminos_values[i],\
-					ft_strlen(g_tetriminos_values[i]) - 1))
+				ft_strlen(g_tetriminos_values[i]) - 1))
 			return (1);
 	return (0);
 }
@@ -200,48 +200,6 @@ static int	is_valid(char *piece)
 	return (valid_characters(piece) && shape_verify(piece));
 }
 
-/*
-** Returns a tetromino piece, but we don't know if it is a valid one so
-** please shut the fuck up about this weird design pattern, but this is
-** 42 anyways and people do like weird shit in this school because they copy
-** each other for some reason? sorry for the rant, but I like this school
-** because it also allows me to do creative shit like this without reprecusion
-** because your boss in real life expects you to do clean, short, design
-** oriented shit code, but it feels good when you can do that because your
-** level of abstraction increase and you level up dude...
-** Yep, I'm high as shit. :)
-**
-** ~~ hits blunt ~~
-**
-** But for real. It is better to follow guide-lines, be around smart people,
-** and complete tickets... you feel that you are on a track, and you just have
-** to complete this tasks. It is not like you are in limbo and have to guess
-** how to design a project from scratch?
-**
-**                   dM
-**                   MMr
-**                  4MMML                  .
-**                  MMMMM.                xf
-**  .              "M6MMM               .MM-
-**   Mh..          +MM5MMM            .MMMM
-**   .MMM.         .MMMMML.          MMMMMh
-**    )MMMh.        MM5MMM         MMMMMMM
-**     3MMMMx.     'MMM3MMf      xnMMMMMM"
-**     '*MMMMM      MMMMMM.     nMMMMMMP"
-**       *MMMMMx    "MMM5M\    .MMMMMMM=
-**        *MMMMMh   "MMMMM"   JMMMMMMP
-**          MMMMMM   GMMMM.  dMMMMMM            .
-**           MMMMMM  "MMMM  .MMMMM(        .nnMP"
-**..          *MMMMx  MMM"  dMMMM"    .nnMMMMM*
-** "MMn...     'MMMMr 'MM   MMM"   .nMMMMMMM*"
-**  "4MMMMnn..   *MMM  MM  MMP"  .dMMMMMMM""
-**    ^MMMMMMMMx.  *ML "M .M*  .MMMMMM**"
-**       *PMMMMMMhn. *x > M  .MMMM**""
-**          ""**MMMMhx/.h/ .=*"
-**                   .3P"%....
-**                 nP"     "*MMnx
-*/
-
 static char	*get_piece(int fd)
 {
 	int		i;
@@ -254,6 +212,7 @@ static char	*get_piece(int fd)
 	{
 		piece = ft_strcat(piece, line);
 		piece[ft_strlen(piece)] = '\n';
+		free(line);
 	}
 	return (piece);
 }
@@ -279,13 +238,22 @@ char		**f_read(int fd)
 	{
 		pieces[i] = get_piece(fd);
 		if (!(is_valid(pieces[i])))
+		{
+			//free all pieces that you get before piece[i];
+			//free char *pieces;
+			while (i >= 0)
+			{
+				free(pieces[i]);
+				--i;
+			}
+			free(pieces);
 			return (NULL);
+		}
 		i += 1;
 		g_tetriminos_count = i;
 		if (get_next_line(fd, &end_line) == 0)
-		{
 			return (pieces);
-		}
+		free(end_line);
 	}
 	return (NULL);
 }
