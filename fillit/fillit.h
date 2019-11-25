@@ -68,6 +68,7 @@ char	*g_tetriminos_value[20];
 */
 
 int		g_tetriminos_count;
+int		g_map_size;
 
 /*
 ** Structures of a tetromino, defining the coordinates by its x and y values,
@@ -92,5 +93,7 @@ char					**f_read(int fd);
 char					**create_map(int size);
 char					**solve(t_tetromino *tet);
 t_tetromino				*fillit_tetromino(char **map);
+void					free_tetromino(t_tetromino *tetromino);
+void					free_map(char **map);
 
 #endif

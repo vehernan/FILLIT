@@ -33,6 +33,7 @@ static void	fill_map(char ***map, char val, int size)
 		}
 		row += 1;
 	}
+	return ;
 }
 
 /*
@@ -44,15 +45,12 @@ static char	**allocate_map(int size)
 	char	**map;
 	int		i;
 
-	i = 0;
+	i = -1;
 	if (!(map = (char **)malloc(sizeof(char *) * size)))
 		return (NULL);
-	while (i < size)
-	{
-		if (!(map[i] = (char *)malloc(sizeof(char) * size + 1)))
+	while (++i < size)
+		if (!(map[i] = ft_strnew(size)))
 			return (NULL);
-		i += 1;
-	}
 	return (map);
 }
 

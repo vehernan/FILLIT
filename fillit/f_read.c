@@ -239,13 +239,6 @@ char		**f_read(int fd)
 		pieces[i] = get_piece(fd);
 		if (!(is_valid(pieces[i])))
 		{
-			//free all pieces that you get before piece[i];
-			//free char *pieces;
-			while (i >= 0)
-			{
-				free(pieces[i]);
-				--i;
-			}
 			free(pieces);
 			return (NULL);
 		}

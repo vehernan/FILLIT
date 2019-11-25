@@ -6,7 +6,7 @@
 #    By: vehernan <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/31 22:43:41 by vehernan          #+#    #+#              #
-#    Updated: 2019/11/18 09:46:10 by vehernan         ###   ########.fr        #
+#    Updated: 2019/11/21 17:23:54 by vehernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = fillit
 CC = clang
 FLAGS = -Wall -Wextra -Werror -g
 INCLUDES = libft/includes
-SRCS = create_map.c f_read.c solve.c tetromino.c main.c
+SRCS = create_map.c f_read.c solve.c tetromino.c main.c utils.c
 OBJS = *.o
 LIB_DIR = Libft/
 
