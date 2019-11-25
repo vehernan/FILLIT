@@ -22,6 +22,7 @@ static void		usage(char *argv0)
 	ft_putstr("usage: ");
 	ft_putstr(argv0);
 	ft_putstr(" [fillit_file]\n");
+	return ;
 }
 
 /*
@@ -41,6 +42,7 @@ static void		print_map(char **map)
 		ft_putstr(map[i]);
 		ft_putchar('\n');
 	}
+	return ;
 }
 
 /*
@@ -70,10 +72,11 @@ int				main(int argc, char *argv[])
 		else if ((parse = f_read(fd)) && (ft_strlen(parse[0])))
 		{
 			tetrominos = fillit_tetromino(parse);
-			map = solve(tetrominos); //5 leaks here
-			print_map(map); //no leaks
-			free_map(map); //8 leaks
-			free_tetromino(tetrominos);
+			map = solve(tetrominos); // 5 leaks -> 2 left after fixing free_map
+			print_map(map);
+			free_map(map); // 3 leaks
+			free_tetromino(tetrominos); // 2 leaks
+						while (1);
 		}
 		else
 			ft_putstr("error\n");
@@ -81,6 +84,5 @@ int				main(int argc, char *argv[])
 	}
 	else
 		usage(argv[0]);
-						while (1);
 	return (0);
 }

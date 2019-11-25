@@ -17,7 +17,7 @@
 **   fill_map(&map, '.')   ===>>   fill_map(char ***map, char val)
 */
 
-static void	fill_map(char ***map, char val, int size)
+static void	fill_map(char **map, char val, int size)
 {
 	int		row;
 	int		col;
@@ -28,8 +28,8 @@ static void	fill_map(char ***map, char val, int size)
 		col = 0;
 		while (col < size)
 		{
-			(*map)[row][col++] = val;
-			(*map)[row][col] = '\0';
+			map[row][col++] = val;
+			map[row][col] = '\0';
 		}
 		row += 1;
 	}
@@ -66,6 +66,6 @@ char		**create_map(int size)
 	char	**map;
 
 	map = allocate_map(size);
-	fill_map(&map, '.', size);
+	fill_map(map, '.', size);
 	return (map);
 }

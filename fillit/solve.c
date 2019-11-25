@@ -17,7 +17,7 @@
 ** map, by the letter of the current tetromino.
 */
 
-static void	fillit_set_tetromino(t_tetromino *tet, char **map, int y, int x)
+static void	set_tetromino(t_tetromino *tet, char **map, int y, int x)
 {
 	int		row;
 	int		col;
@@ -48,7 +48,7 @@ static void	fillit_set_tetromino(t_tetromino *tet, char **map, int y, int x)
 ** tetromino :)
 */
 
-static int	fillit_check_placement(t_tetromino *tet, char **map, int y, int x)
+static int	check_placement(t_tetromino *tet, char **map, int y, int x)
 {
 	int		row;
 	int		col;
@@ -71,7 +71,7 @@ static int	fillit_check_placement(t_tetromino *tet, char **map, int y, int x)
 		}
 		col += 1;
 	}
-	fillit_set_tetromino(tet, map, y, x);
+	set_tetromino(tet, map, y, x);
 	return (1);
 }
 
@@ -81,7 +81,7 @@ static int	fillit_check_placement(t_tetromino *tet, char **map, int y, int x)
 ** think I have to mention why the -1 in the counter... ;)
 */
 
-static void	fillit_move_tetromino_upperleft(t_tetromino *tet)
+static void	move_tetromino_upperleft(t_tetromino *tet)
 {
 	int			i;
 	int			pos_x;
@@ -119,7 +119,7 @@ static void	fillit_move_tetromino_upperleft(t_tetromino *tet)
 ** it's going to return a one (1).
 */
 
-static int	fillit_solve_map(char **map, t_tetromino *tet, int size)
+static int	solve_map(char **map, t_tetromino *tet, int size)
 {
 	int		x;
 	int		y;
@@ -134,12 +134,12 @@ static int	fillit_solve_map(char **map, t_tetromino *tet, int size)
 		x = -1;
 		while (++x <= (size - tet->width))
 		{
-			if (fillit_check_placement(tet, map, y, x))
+			if (check_placement(tet, map, y, x))
 			{
-				if (fillit_solve_map(map, tet->next, size))
+				if (solve_map(map, tet->next, size))
 					return (1);
 				tet->letter = '.';
-				fillit_set_tetromino(tet, map, y, x);
+				set_tetromino(tet, map, y, x);
 				tet->letter = letter;
 			}
 		}
@@ -165,8 +165,8 @@ char		**solve(t_tetromino *tet)
 		return (NULL);
 	size = ft_sqrt(g_tetriminos_count * 4);
 	map = create_map(size);
-	fillit_move_tetromino_upperleft(tet);
-	while (!fillit_solve_map(map, tet, size))
+	move_tetromino_upperleft(tet);
+	while (!solve_map(map, tet, size))
 	{	
 		free_map(map);
 		size += 1;

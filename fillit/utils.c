@@ -9,7 +9,7 @@ void		free_map(char **map)
 	int			i;
 
 	i = -1;
-	while (++i > g_map_size)
+	while (++i >= g_map_size)
 		free(map[i]);
 	free(map);
 }

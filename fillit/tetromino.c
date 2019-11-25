@@ -84,17 +84,17 @@ static t_tetromino	*new_tetrominos(int size)
 	t_tetromino		*new;
 	t_tetromino		*head;
 
-	if (!(new = (t_tetromino *)malloc(sizeof(t_tetromino) + 1)))
+	if (!(new = (t_tetromino *)malloc(sizeof(t_tetromino))))
 		return (NULL);
 	head = new;
 	i = 0;
 	while (i++ < size)
 	{
-		if (!(new->next = (t_tetromino *)malloc(sizeof(t_tetromino) + 1)))
+		if (!(new->next = (t_tetromino *)malloc(sizeof(t_tetromino))))
 			return (NULL);
 		new = new->next;
 	}
-	ft_memset(new, 0, (sizeof(t_tetromino) + 1));
+	ft_memset(new, 0, (sizeof(t_tetromino)));
 	return (head);
 }
 
