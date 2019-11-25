@@ -55,7 +55,7 @@
 ** Macro for buffer size (the biggest file can only be 546 bytes + 1).
 */
 
-# define BUFFER_SIZE (TETROMINO_SIZE * TETROMINO_MAX_TOTAL)
+# define BUFFER_SIZE (TETROMINO_MAX_TOTAL)
 
 /*
 ** Tetrominio encoded values
@@ -68,6 +68,7 @@ char	*g_tetriminos_value[20];
 */
 
 int		g_tetriminos_count;
+int		g_map_size;
 
 /*
 ** Structures of a tetromino, defining the coordinates by its x and y values,

@@ -54,13 +54,20 @@ static void			set_dimensions(t_tetromino *tet)
 ** work with the number of the tetrominos (working as an ID for each one).
 */
 
-static char			***split_tetromino(char ***fullmap, char **map)
+static char			***split_tetromino(char **map)
 {
 	int				i;
+	char			***fullmap;
 
 	i = -1;
+	if (!(fullmap = (char ***)malloc(sizeof(char **) * g_tetriminos_count)))
+		return (NULL);
 	while (++i < g_tetriminos_count)
 		fullmap[i] = ft_strsplit(map[i], '\n');
+	i = -1;
+	while (++i < g_tetriminos_count)
+		free(map[i]);
+	free(map);
 	return (fullmap);
 }
 
@@ -72,7 +79,7 @@ static char			***split_tetromino(char ***fullmap, char **map)
 static t_tetromino	*new_tetrominos(int size)
 {
 	int				i;
-	t_tetromino		*new;
+	t_tetromino                          *new;
 	t_tetromino		*head;
 
 	if (!(new = (t_tetromino *)malloc(sizeof(t_tetromino) + 1)))
@@ -86,6 +93,7 @@ static t_tetromino	*new_tetrominos(int size)
 		new = new->next;
 	}
 	ft_memset(new, 0, (sizeof(t_tetromino) + 1));
+	free(new);
 	return (head);
 }
 
@@ -142,22 +150,27 @@ static t_tetromino	*create_tetrominos(char ***fullmap, \
 t_tetromino			*fillit_tetromino(char **map)
 {
 	int				i;
+	int				j;
 	int				*counter;
 	char			***fullmap;
 	t_tetromino		*tetrominos;
 	t_tetromino		*list;
 
 	i = -1;
+	j = -1;
 	if (!(counter = (int *)malloc(sizeof(int) * 4)))
 		return (NULL);
-	if (!(fullmap = (char ***)malloc(sizeof(char **) * g_tetriminos_count + 1)))
-		return (NULL);
 	tetrominos = new_tetrominos(g_tetriminos_count);
-	fullmap = split_tetromino(fullmap, map);
+	fullmap = split_tetromino(map);
 	list = create_tetrominos(fullmap, tetrominos, LETTER, counter);
 	free(counter);
-	while (++i < g_tetriminos_count)
+	while (++i < g_tetriminos_count) 
+	{
+		while (++j < 4)
+			free(fullmap[i][j]);
+		j = -1;
 		free(fullmap[i]);
+	}
 	free(fullmap);
 	return (list);
 }

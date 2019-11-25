@@ -72,20 +72,29 @@ int				main(int argc, char *argv[])
 		}
 		else if ((map = f_read(fd)) && (ft_strlen(map[0])))
 		{
-			tetrominos = fillit_tetromino(map);
+			tetrominos = fillit_tetromino(map);			// <--- leaks
 			ft_memdel((void **)map);
 			map = solve(tetrominos);
 			fillit_print_map(map);
-				//while(1);
 			while ((tmp = tetrominos->next)) // use lstdel fucnction and just copy the while loop remove middle code and add free();
 			{
 				free(tetrominos);
 				tetrominos = tmp;
 			}
-			i = 0;
+
+
+
+			i = g_map_size;
 			while (i >= 0)
 				free(map[i--]);
+
+
+
+
 			free(map);
+
+
+
 		}
 		else
 			ft_putstr("error\n");

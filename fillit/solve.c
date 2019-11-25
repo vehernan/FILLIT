@@ -170,8 +170,13 @@ char		**solve(t_tetromino *tet)
 	fillit_move_tetromino_upperleft(tet);
 	while (!fillit_solve_map(map, tet, size))
 	{
+		g_map_size = size;
+		i = g_map_size;
 		while (i >= 0)
 			free(map[i--]);
+
+
+
 		free(map);
 		size += 1;
 		map = create_map(size);
