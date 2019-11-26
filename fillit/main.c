@@ -72,11 +72,10 @@ int				main(int argc, char *argv[])
 		else if ((parse = f_read(fd)) && (ft_strlen(parse[0])))
 		{
 			tetrominos = fillit_tetromino(parse);
-			map = solve(tetrominos); // 5 leaks -> 2 left after fixing free_map
+			map = solve(tetrominos);
 			print_map(map);
-			free_map(map); // 3 leaks
-			free_tetromino(tetrominos); // 2 leaks
-						while (1);
+			free_map(map);
+			free_tetromino(tetrominos);
 		}
 		else
 			ft_putstr("error\n");

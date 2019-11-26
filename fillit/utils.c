@@ -2,6 +2,7 @@
 
 /*
 ** Free the map
+** fuck the double while loop, it works!
 */
 
 void		free_map(char **map)
@@ -10,6 +11,9 @@ void		free_map(char **map)
 
 	i = -1;
 	while (++i >= g_map_size)
+		free(map[i]);
+	i = -1;
+	while (++i < 4)
 		free(map[i]);
 	free(map);
 }
@@ -27,5 +31,6 @@ void		free_tetromino(t_tetromino *tetromino)
 		free(tetromino);
 		tetromino = tmp;
 	}
+	free(tetromino);
 	return ;
 }
