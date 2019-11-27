@@ -81,7 +81,7 @@ static char			***split_tetromino(char **map)
 static t_tetromino	*new_tetrominos(int size)
 {
 	int				i;
-	t_tetromino		*new;
+	t_tetromino                          *new;
 	t_tetromino		*head;
 
 	if (!(new = (t_tetromino *)malloc(sizeof(t_tetromino))))
