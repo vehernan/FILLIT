@@ -5,15 +5,15 @@
 ** fuck the double while loop, it works!
 */
 
-void		free_map(char **map)
+void free_map(char **map)
 {
-	int			i;
+	int i;
 
 	i = -1;
-	while (++i >= g_map_size)
+	while (++i > g_map_size)
 		free(map[i]);
 	i = -1;
-	while (++i < 4)
+	while (++i < 2)
 		free(map[i]);
 	free(map);
 }
@@ -22,7 +22,7 @@ void		free_map(char **map)
 ** Free the tetrominos pieces
 */
 
-void		free_tetromino(t_tetromino *tetromino)
+void free_tetromino(t_tetromino *tetromino)
 {
 	t_tetromino *tmp;
 
@@ -32,5 +32,5 @@ void		free_tetromino(t_tetromino *tetromino)
 		tetromino = tmp;
 	}
 	free(tetromino);
-	return ;
+	return;
 }
