@@ -57,16 +57,18 @@ static void			set_dimensions(t_tetromino *tet)
 static char			***split_tetromino(char **map)
 {
 	int				i;
+	char			*tmp;
 	char			***fullmap;
 
 	i = -1;
-	if (!(fullmap = (char ***)malloc(sizeof(char **) * g_tetriminos_count)))
+	if (!(fullmap = (char ***)malloc(sizeof(char **) * g_tetriminos_count + 1)))
 		return (NULL);
 	while (++i < g_tetriminos_count)
-		fullmap[i] = ft_strsplit(map[i], '\n');
-	i = -1;
-	while (++i < g_tetriminos_count)
+	{
+		tmp = map[i];
 		free(map[i]);
+		fullmap[i] = ft_strsplit(tmp, '\n');
+	}
 	free(map);
 	return (fullmap);
 }
@@ -82,18 +84,17 @@ static t_tetromino	*new_tetrominos(int size)
 	t_tetromino                          *new;
 	t_tetromino		*head;
 
-	if (!(new = (t_tetromino *)malloc(sizeof(t_tetromino) + 1)))
+	if (!(new = (t_tetromino *)malloc(sizeof(t_tetromino))))
 		return (NULL);
 	head = new;
 	i = 0;
 	while (i++ < size)
 	{
-		if (!(new->next = (t_tetromino *)malloc(sizeof(t_tetromino) + 1)))
+		if (!(new->next = (t_tetromino *)malloc(sizeof(t_tetromino))))
 			return (NULL);
 		new = new->next;
 	}
-	ft_memset(new, 0, (sizeof(t_tetromino) + 1));
-	free(new);
+	ft_memset(new, 0, (sizeof(t_tetromino)));
 	return (head);
 }
 
@@ -168,8 +169,8 @@ t_tetromino			*fillit_tetromino(char **map)
 	{
 		while (++j < 4)
 			free(fullmap[i][j]);
-		j = -1;
 		free(fullmap[i]);
+		j = -1;
 	}
 	free(fullmap);
 	return (list);

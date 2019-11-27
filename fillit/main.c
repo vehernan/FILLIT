@@ -17,11 +17,12 @@
 ** Function ft_progname(), will output in a string, the name of the program.
 */
 
-static void		fillit_usage(char *argv0)
+static void		usage(char *argv0)
 {
 	ft_putstr("usage: ");
 	ft_putstr(argv0);
 	ft_putstr(" [fillit_file]\n");
+	return ;
 }
 
 /*
@@ -29,7 +30,7 @@ static void		fillit_usage(char *argv0)
 ** is finally found. This will be the output of the program.
 */
 
-static void		fillit_print_map(char **map)
+static void		print_map(char **map)
 {
 	size_t		i;
 	size_t		len;
@@ -41,6 +42,7 @@ static void		fillit_print_map(char **map)
 		ft_putstr(map[i]);
 		ft_putchar('\n');
 	}
+	return ;
 }
 
 /*
@@ -59,48 +61,27 @@ static void		fillit_print_map(char **map)
 int				main(int argc, char *argv[])
 {
 	int			fd;
-	int			i;
+	char		**parse;
 	char		**map;
 	t_tetromino *tetrominos;
-	t_tetromino *tmp;
 
-	i = 0;
 	if (argc == 2)
 	{
-		if ((fd = open(argv[1], O_RDONLY)) == -1) {
+		if ((fd = open(argv[1], O_RDONLY)) == -1)
 			ft_putstr("error\n");
-		}
-		else if ((map = f_read(fd)) && (ft_strlen(map[0])))
+		else if ((parse = f_read(fd)) && (ft_strlen(parse[0])))
 		{
-			tetrominos = fillit_tetromino(map);			// <--- leaks
-			ft_memdel((void **)map);
+			tetrominos = fillit_tetromino(parse);
 			map = solve(tetrominos);
-			fillit_print_map(map);
-			while ((tmp = tetrominos->next)) // use lstdel fucnction and just copy the while loop remove middle code and add free();
-			{
-				free(tetrominos);
-				tetrominos = tmp;
-			}
-
-
-
-			i = g_map_size;
-			while (i >= 0)
-				free(map[i--]);
-
-
-
-
-			free(map);
-
-
-
+			print_map(map);
+			free_map(map);
+			free_tetromino(tetrominos);
 		}
 		else
 			ft_putstr("error\n");
 		close(fd);
 	}
 	else
-		fillit_usage(argv[0]);
+		usage(argv[0]);
 	return (0);
 }
