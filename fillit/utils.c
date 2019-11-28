@@ -13,7 +13,7 @@ void free_map(char **map)
 	while (++i > g_map_size)
 		free(map[i]);
 	i = -1;
-	while (++i < 2)
+	while (++i <= g_tetriminos_count)
 		free(map[i]);
 	free(map);
 }
