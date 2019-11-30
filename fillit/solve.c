@@ -61,7 +61,7 @@ static int	check_placement(t_tetromino *tet, char **map, int y, int x)
 		row = 0;
 		while (tet->width > row)
 		{
-			if (tet->x[i] == col && tet->y[i] == row && i < SIZE)
+			if (tet->x[i] == col && tet->y[i] == row && i < 4)
 			{
 				if (map[col + y][row + x] != '.')
 					return (0);
@@ -90,9 +90,9 @@ static void	move_tetromino_upperleft(t_tetromino *tet)
 	while (tet)
 	{
 		i = -1;
-		pos_x = SIZE - 1;
-		pos_y = SIZE - 1;
-		while (++i < SIZE)
+		pos_x = 4 - 1;
+		pos_y = 4 - 1;
+		while (++i < 4)
 		{
 			if (tet->x[i] < pos_x)
 				pos_x = tet->x[i];
@@ -100,7 +100,7 @@ static void	move_tetromino_upperleft(t_tetromino *tet)
 				pos_y = tet->y[i];
 		}
 		i = -1;
-		while (++i < SIZE)
+		while (++i < 4)
 		{
 			tet->x[i] -= pos_x;
 			tet->y[i] -= pos_y;
@@ -149,7 +149,7 @@ static int	solve_map(char **map, t_tetromino *tet, int size)
 
 /*
 ** The size of map will be the square root of the number of tetrominos in the
-** file, time the size of the blocks (SIZE == 4), and then we move coordinates
+** file, time the size of the blocks (4 == 4), and then we move coordinates
 ** of the tetromino to the top-left corner. Then we enter into the real shit,
 ** the recursive function. If a solution isn't found, we will delete the map,
 ** increment the size, and create a new map with this size. This will be going
@@ -168,6 +168,7 @@ char		**solve(t_tetromino *tet)
 	move_tetromino_upperleft(tet);
 	while (!solve_map(map, tet, size))
 	{	
+		g_map_size = size;
 		free_map(map);
 		size += 1;
 		map = create_map(size);

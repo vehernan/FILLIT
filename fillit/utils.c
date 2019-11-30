@@ -10,10 +10,7 @@ void free_map(char **map)
 	int i;
 
 	i = -1;
-	while (++i > g_map_size)
-		free(map[i]);
-	i = -1;
-	while (++i <= g_tetriminos_count)
+	while (++i < g_map_size)
 		free(map[i]);
 	free(map);
 }
