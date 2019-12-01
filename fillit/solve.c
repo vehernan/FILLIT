@@ -163,11 +163,11 @@ char		**solve(t_tetromino *tet)
 
 	if (!tet)
 		return (NULL);
-	size = ft_sqrt(g_tetriminos_count * 4);
+	size = ft_sqrt(4 * g_tetrominos_count);
 	map = create_map(size);
 	move_tetromino_upperleft(tet);
 	while (!solve_map(map, tet, size))
-	{	
+	{
 		g_map_size = size;
 		free_map(map);
 		size += 1;
