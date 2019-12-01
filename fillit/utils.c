@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vehernan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/30 19:32:56 by vehernan          #+#    #+#             */
+/*   Updated: 2019/11/30 19:35:16 by vehernan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fillit.h"
 
 /*
@@ -5,9 +17,9 @@
 ** fuck the double while loop, it works!
 */
 
-void free_map(char **map)
+void			free_map(char **map)
 {
-	int i;
+	int			i;
 
 	i = -1;
 	while (++i < g_map_size)
@@ -19,9 +31,9 @@ void free_map(char **map)
 ** Free the tetrominos pieces
 */
 
-void free_tetromino(t_tetromino *tetromino)
+void			free_tetromino(t_tetromino *tetromino)
 {
-	t_tetromino *tmp;
+	t_tetromino	*tmp;
 
 	while ((tmp = tetromino->next))
 	{
@@ -29,5 +41,5 @@ void free_tetromino(t_tetromino *tetromino)
 		tetromino = tmp;
 	}
 	free(tetromino);
-	return;
+	return ;
 }

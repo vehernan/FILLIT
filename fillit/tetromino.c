@@ -6,7 +6,7 @@
 /*   By: vehernan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/03 19:44:44 by vehernan          #+#    #+#             */
-/*   Updated: 2019/11/03 19:44:47 by vehernan         ###   ########.fr       */
+/*   Updated: 2019/11/30 19:40:43 by vehernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static char			***split_tetromino(char **map)
 static t_tetromino	*new_tetrominos(int size)
 {
 	int				i;
-	t_tetromino                          *new;
+	t_tetromino		*new;
 	t_tetromino		*head;
 
 	if (!(new = (t_tetromino *)malloc(sizeof(t_tetromino))))
@@ -165,7 +165,7 @@ t_tetromino			*fillit_tetromino(char **map)
 	fullmap = split_tetromino(map);
 	list = create_tetrominos(fullmap, tetrominos, LETTER, counter);
 	free(counter);
-	while (++i < g_tetriminos_count) 
+	while (++i < g_tetriminos_count)
 	{
 		while (++j < 4)
 			free(fullmap[i][j]);
