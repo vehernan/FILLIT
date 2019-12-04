@@ -13,7 +13,7 @@
 #ifndef FILLIT_H
 # define FILLIT_H
 
-# include "./Libft/libft.h"
+# include "./libft/libft.h"
 
 /*
 ** Library fcntl.h included to be able to use open(), read().
@@ -37,37 +37,31 @@
 ** Macros for letter characters, and rows, colum, cord.
 */
 
-# define LETTER 'A'
-# define NUM_TET (0)
-# define ROW (1)
-# define COL (2)
-# define COORD (3)
+# define LETTER     'A'
+# define NUM_TETS   (0)
+# define ROW        (1)
+# define COL        (2)
+# define COORD      (3)
 
 /*
 ** Macros for tetromino width, size, and the max numbers of tetromino.
 */
 
-# define SIZE 4
-# define TETROMINO_SIZE 21
-# define TETROMINO_MAX_TOTAL (26 - (LETTER - 'A'))
-
-/*
-** Macro for buffer size (the biggest file can only be 546 bytes + 1).
-*/
-
-# define BUFFER_SIZE (TETROMINO_MAX_TOTAL)
+# define SIZE       (4)
+# define SIZE_TET   (21)
+# define MAX_TETS   (26)
 
 /*
 ** Tetrominio encoded values
 */
 
-char	*g_tetriminos_value[20];
+char	*g_tetrominos_value[20];
 
 /*
 ** Global variable for number of tetriminos
 */
 
-int		g_tetriminos_count;
+int		g_tetrominos_count;
 int		g_map_size;
 
 /*
@@ -89,10 +83,10 @@ typedef struct			s_tetromino
 ** Prototypes for fillit functions.
 */
 
-char					**f_read(int fd);
+char					**read_file(int fd);
 char					**create_map(int size);
 char					**solve(t_tetromino *tet);
-t_tetromino				*fillit_tetromino(char **map);
+t_tetromino				*get_tetrominos(char **map);
 void					free_tetromino(t_tetromino *tetromino);
 void					free_map(char **map);
 

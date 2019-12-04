@@ -69,9 +69,9 @@ int				main(int argc, char *argv[])
 	{
 		if ((fd = open(argv[1], O_RDONLY)) == -1)
 			ft_putstr("error\n");
-		else if ((parse = f_read(fd)) && (ft_strlen(parse[0])))
+		else if ((parse = read_file(fd)) && (ft_strlen(parse[0])))
 		{
-			tetrominos = fillit_tetromino(parse);
+			tetrominos = get_tetrominos(parse);
 			map = solve(tetrominos);
 			print_map(map);
 			free_map(map);

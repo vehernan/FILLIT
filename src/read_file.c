@@ -18,7 +18,7 @@
 ** or emojis or whatever...
 */
 
-char		*g_tetriminos_values[] =
+char		*g_tetrominos_values[] =
 {
 	"#...\n#...\n#...\n#...",
 	".#..\n.#..\n.#..\n.#..",
@@ -148,8 +148,8 @@ static int	shape_verify(char *piece)
 	i = -1;
 	total = 113;
 	while (++i < total)
-		if (!ft_strncmp(piece, g_tetriminos_values[i],\
-				ft_strlen(g_tetriminos_values[i]) - 1))
+		if (!ft_strncmp(piece, g_tetrominos_values[i],\
+				ft_strlen(g_tetrominos_values[i]) - 1))
 			return (1);
 	return (0);
 }
@@ -207,7 +207,7 @@ static char	*get_piece(int fd)
 	char	*line;
 
 	i = -1;
-	piece = ft_strnew(TETROMINO_SIZE);
+	piece = ft_strnew(SIZE_TET);
 	while (++i < 4 && get_next_line(fd, &line) > 0)
 	{
 		piece = ft_strcat(piece, line);
@@ -225,16 +225,16 @@ static char	*get_piece(int fd)
 ** pieces, it will return the characters read.
 */
 
-char		**f_read(int fd)
+char		**read_file(int fd)
 {
 	int		i;
 	char	*end_line;
 	char	**pieces;
 
 	i = 0;
-	if (!(pieces = (char **)malloc(sizeof(char *) * BUFFER_SIZE)))
+	if (!(pieces = (char **)malloc(sizeof(char *) * 2)))
 		return (NULL);
-	while (i < TETROMINO_MAX_TOTAL)
+	while (i < MAX_TETS)
 	{
 		pieces[i] = get_piece(fd);
 		if (!(is_valid(pieces[i])))
@@ -243,7 +243,7 @@ char		**f_read(int fd)
 			return (NULL);
 		}
 		i += 1;
-		g_tetriminos_count = i;
+		g_tetrominos_count = i;
 		if (get_next_line(fd, &end_line) == 0)
 			return (pieces);
 		free(end_line);

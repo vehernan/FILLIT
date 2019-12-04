@@ -14,7 +14,7 @@ NAME = fillit
 CC = clang
 FLAGS = -Wall -Wextra -Werror -g
 INCLUDES = libft/includes
-SRCS = create_map.c f_read.c solve.c tetromino.c main.c utils.c
+SRCS = read_file.c solve.c tetromino.c main.c utils.c
 OBJS = *.o
 LIB_DIR = Libft/
 
@@ -30,7 +30,7 @@ all: $(NAME)
 
 clean:
 	@rm -f $(OBJS)
-	@make -C $(LIB_DIR) fclean 
+	@make -C $(LIB_DIR) fclean
 	@echo "[INFO] Objects removed in both directories"
 	@rm -f .DS* && rm -f ._*
 	@echo "[INFO] ._files removed"

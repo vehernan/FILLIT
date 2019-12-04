@@ -61,9 +61,9 @@ static char			***split_tetromino(char **map)
 	char			***fullmap;
 
 	i = -1;
-	if (!(fullmap = (char ***)malloc(sizeof(char **) * g_tetriminos_count + 1)))
+	if (!(fullmap = (char ***)malloc(sizeof(char **) * g_tetrominos_count + 1)))
 		return (NULL);
-	while (++i < g_tetriminos_count)
+	while (++i < g_tetrominos_count)
 	{
 		tmp = map[i];
 		free(map[i]);
@@ -119,8 +119,8 @@ static t_tetromino	*create_tetrominos(char ***fullmap, \
 	t_tetromino		*head;
 
 	head = tet;
-	data[NUM_TET] = -1;
-	while (++data[NUM_TET] < g_tetriminos_count)
+	data[NUM_TETS] = -1;
+	while (++data[NUM_TETS] < g_tetrominos_count)
 	{
 		data[COORD] = 0;
 		data[ROW] = -1;
@@ -129,7 +129,7 @@ static t_tetromino	*create_tetrominos(char ***fullmap, \
 			data[COL] = -1;
 			while (++data[COL] < 4)
 			{
-				if (fullmap[data[NUM_TET]][data[ROW]][data[COL]] == '#')
+				if (fullmap[data[NUM_TETS]][data[ROW]][data[COL]] == '#')
 				{
 					tet->x[data[COORD]] = data[ROW];
 					tet->y[data[COORD]++] = data[COL];
@@ -148,7 +148,7 @@ static t_tetromino	*create_tetrominos(char ***fullmap, \
 ** tetrominos from the map. In this function, the array of counter is defined.
 */
 
-t_tetromino			*fillit_tetromino(char **map)
+t_tetromino			*get_tetrominos(char **map)
 {
 	int				i;
 	int				j;
@@ -161,11 +161,11 @@ t_tetromino			*fillit_tetromino(char **map)
 	j = -1;
 	if (!(counter = (int *)malloc(sizeof(int) * 4)))
 		return (NULL);
-	tetrominos = new_tetrominos(g_tetriminos_count);
+	tetrominos = new_tetrominos(g_tetrominos_count);
 	fullmap = split_tetromino(map);
 	list = create_tetrominos(fullmap, tetrominos, LETTER, counter);
 	free(counter);
-	while (++i < g_tetriminos_count)
+	while (++i < g_tetrominos_count)
 	{
 		while (++j < 4)
 			free(fullmap[i][j]);
